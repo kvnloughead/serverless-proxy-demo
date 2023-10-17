@@ -3,17 +3,20 @@ app: serverless-proxy
 service: serverless-proxy
 frameworkVersion: "3"
 
+# dotenv package is not necessary if you use this
 useDotenv: true
 
 provider:
   name: aws
   runtime: nodejs18.x
   environment:
+    # add a .env file with API_KEY=your_api_key
     API_KEY: ${env:API_KEY}
   httpApi:
     cors:
       allowedOrigins:
-        - http://example.com # replace with your domain(s)
+        # specify all domains that should be allowed to make requests
+        - http://example.com
         - http://localhost:3001
       allowedHeaders:
         - Content-Type
@@ -23,7 +26,7 @@ provider:
       allowCredentials: true
       exposedResponseHeaders:
         - Special-Response-Header
-      maxAge: 6000 # In seconds
+      maxAge: 6000
 
 functions:
   api:
