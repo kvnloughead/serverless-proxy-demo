@@ -10,6 +10,20 @@ provider:
   runtime: nodejs18.x
   environment:
     API_KEY: ${env:API_KEY}
+  httpApi:
+    cors:
+      allowedOrigins:
+        - http://example.com # replace with your domain(s)
+        - http://localhost:3001
+      allowedHeaders:
+        - Content-Type
+        - Authorization
+      allowedMethods:
+        - GET
+      allowCredentials: true
+      exposedResponseHeaders:
+        - Special-Response-Header
+      maxAge: 6000 # In seconds
 
 functions:
   api:
@@ -18,16 +32,3 @@ functions:
       - httpApi:
           path: /
           method: get
-          cors:
-            origin:
-              - http://example.com # replace with your domain(s)
-              - http://localhost:3001
-            headers:
-              - Content-Type
-              - X-Amz-Date
-              - Authorization
-              - X-Api-Key
-              - X-Amz-Security-Token
-              - X-Amz-User-Agent
-              - X-Amzn-Trace-Id
-            allowCredentials: false
