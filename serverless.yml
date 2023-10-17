@@ -1,7 +1,7 @@
 org: kloughead
 app: serverless-proxy
 service: serverless-proxy
-frameworkVersion: '3'
+frameworkVersion: "3"
 
 provider:
   name: aws
@@ -14,3 +14,16 @@ functions:
       - httpApi:
           path: /
           method: get
+          cors:
+            origin:
+              - http://example.com # replace with your domain(s)
+              - http://localhost:3001
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - X-Amzn-Trace-Id
+            allowCredentials: false
