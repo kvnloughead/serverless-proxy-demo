@@ -3,9 +3,13 @@ app: serverless-proxy
 service: serverless-proxy
 frameworkVersion: "3"
 
+useDotenv: true
+
 provider:
   name: aws
   runtime: nodejs18.x
+  environment:
+    API_KEY: ${env:API_KEY}
 
 functions:
   api:
