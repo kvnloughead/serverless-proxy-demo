@@ -4,7 +4,10 @@
   "description": "Example of serverless proxy server for hiding API keys",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy:dev": "sls deploy --stage dev --conceal",
+    "deploy:prod": "sls deploy --stage prod --conceal",
+    "run:dev": "sls invoke  local --function api",
+    "run:prod": "sls invoke --function api"
   },
   "author": "Kevin Loughead",
   "license": "ISC",
