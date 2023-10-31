@@ -6,12 +6,16 @@
   "scripts": {
     "deploy:dev": "sls deploy --stage dev --conceal",
     "deploy:prod": "sls deploy --stage prod --conceal",
-    "run:dev": "sls invoke  local --function api",
-    "run:prod": "sls invoke --function api"
+    "run:dev": "sls offline",
+    "invoke:dev": "sls invoke --function api",
+    "invoke:prod": "sls invoke local --function api"
   },
   "author": "Kevin Loughead",
   "license": "ISC",
   "dependencies": {
-    "request": "^2.88.2"
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "serverless-offline": "^13.2.0"
   }
 }

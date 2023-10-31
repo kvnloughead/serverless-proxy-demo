@@ -1,24 +1,52 @@
-const request = require("request");
+// Three handlers are shown below. The first shows how to set up a simple
+// proxy via a GET request. In many cases this is sufficient. The other
+// handlers demonstrate two ways to send data to the proxy.
+// The README provides usage instructions.
 
-const location = { latitude: "42.809730", longitude: "-70.876740" };
-const { latitude, longitude } = location;
+const axios = require("axios");
 
-module.exports.handler = (event, context, callback) => {
-  const headers = { "Access-Control-Allow-Origin": "*" };
-  let response;
+// GET /weather
+// Send a request to this endpoint and you'll receive the weather.
+// The API key is used, but hidden from the client and not tracked by Git.
+exports.getWeather = async (event) => {
+  try {
+    const response = await axios.get(
+      `https://api.openweathermap.org/data/2.5/weather?lat=42.809730&lon=-70.876740&units=imperial&appid=${process.env.API_KEY}`,
+    );
+    return {
+      statusCode: 200,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(response.data),
+    };
+  } catch (error) {
+    return {
+      statusCode: 404,
+      body: JSON.stringify({
+        message: "Error fetching weather data",
+        error: error.message,
+      }),
+    };
+  }
+};
 
-  request.get(
-    {
-      url: `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${process.env.API_KEY}`,
-    },
-    (err, res, body) => {
-      if (err) {
-        response = { statusCode: 404, headers, body: err };
-        callback(null, response);
-      } else {
-        response = { statusCode: res.statusCode, headers, body };
-        callback(null, response);
-      }
-    },
-  );
+// GET /id/:id
+// An example showing how to specify some data as a URL parameter.
+exports.getId = async (event) => {
+  // Access the value of :id
+  const id = event.pathParameters.id;
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ message: `The id is ${id}` }),
+  };
+};
+
+// POST /data
+// An example showing how to send data in the body of a POST request.
+exports.postData = async (event) => {
+  // Parse the data from the body
+  const data = JSON.parse(event.body);
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ message: "Data received", data }),
+  };
 };

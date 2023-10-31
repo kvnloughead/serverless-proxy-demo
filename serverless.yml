@@ -10,28 +10,48 @@ provider:
   name: aws
   runtime: nodejs18.x
   environment:
-    # add a .env file with API_KEY=your_api_key
+    # Just add a .env file with API_KEY=your_api_key
+    # Make sure you add .env to your .gitignore file!
     API_KEY: ${env:API_KEY}
   httpApi:
     cors:
       allowedOrigins:
         # specify all domains that should be allowed to make requests
-        - http://example.com
+        - http://your-website.com
         - http://localhost:3001
       allowedHeaders:
         - Content-Type
         - Authorization
       allowedMethods:
         - GET
+        - POST
       allowCredentials: true
       exposedResponseHeaders:
         - Special-Response-Header
       maxAge: 6000
 
+# Allows deployment of the functions in offline mode. Run the dev server with
+# `sls offline` or `npm run run:dev`.
+plugins:
+  - serverless-offline
+
+# Configures our applications three lambda functions and their handlers.
 functions:
-  api:
-    handler: index.handler
+  getWeather:
+    handler: index.getWeather
     events:
       - httpApi:
-          path: /
+          path: /weather
           method: get
+  getId:
+    handler: index.getId
+    events:
+      - httpApi:
+          path: /id/{id}
+          method: get
+  postData:
+    handler: index.postData
+    events:
+      - httpApi:
+          path: /data
+          method: post
