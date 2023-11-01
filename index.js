@@ -1,13 +1,17 @@
-// Three handlers are shown below. The first shows how to set up a simple
-// proxy via a GET request. In many cases this is sufficient. The other
-// handlers demonstrate two ways to send data to the proxy.
-// The README provides usage instructions.
+/**
+ * Three handlers are shown below. The first shows how to set up a simple
+ * proxy via a GET request. In many cases this is sufficient. The other
+ * handlers demonstrate two ways to send data to the proxy.
+ * The README provides usage instructions.
+ */
 
 const axios = require("axios");
 
-// GET /weather
-// Send a request to this endpoint and you'll receive the weather.
-// The API key is used, but hidden from the client and not tracked by Git.
+/**
+ * GET /weather \
+ * Sends a request to this endpoint and you'll receive the weather.
+ * The API key is used, but hidden from the client and not tracked by Git.
+ */
 exports.getWeather = async (event) => {
   try {
     const response = await axios.get(
@@ -29,8 +33,11 @@ exports.getWeather = async (event) => {
   }
 };
 
-// GET /id/:id
-// An example showing how to specify some data as a URL parameter.
+/**
+ * GET /id/:id \
+ * An example showing how to specify some data as a URL parameter.
+ * Returns a response including the value of the parameter.
+ */
 exports.getId = async (event) => {
   // Access the value of :id
   const id = event.pathParameters.id;
@@ -40,8 +47,11 @@ exports.getId = async (event) => {
   };
 };
 
-// POST /data
-// An example showing how to send data in the body of a POST request.
+/**
+ * POST /data \
+ * An example showing how to send data in the body of a POST request.
+ * Returns a response including the data from the body.
+ */
 exports.postData = async (event) => {
   // Parse the data from the body
   const data = JSON.parse(event.body);
