@@ -1,3 +1,4 @@
+# Make sure org, app, and service have the correct values
 org: kloughead
 app: serverless-proxy
 service: serverless-proxy
@@ -16,7 +17,8 @@ provider:
   httpApi:
     cors:
       allowedOrigins:
-        # specify all domains that should be allowed to make requests
+        # Specify all domains that should be allowed to make requests. Include
+        # the domain you run your frontend on locally, as well as the deployed # domain.
         - http://your-website.com
         - http://localhost:3001
       allowedHeaders:
@@ -30,23 +32,26 @@ provider:
         - Special-Response-Header
       maxAge: 6000
 
-# Allows deployment of the functions in offline mode. Run the dev server with
-# `sls offline` or `npm run run:dev`.
+# Allows deployment of the functions in offline mode, for local testing
 plugins:
   - serverless-offline
 
 # Configures our applications three lambda functions and their handlers.
 functions:
+  # The serverless function's name
   getWeather:
+    # The handler is specified as fileName.functionName
     handler: index.getWeather
     events:
       - httpApi:
+          # The endpoint and method
           path: /weather
           method: get
   getId:
     handler: index.getId
     events:
       - httpApi:
+          # Curly braces indicate a request parameter
           path: /id/{id}
           method: get
   postData:

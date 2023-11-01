@@ -4,9 +4,8 @@
   "description": "Example of serverless proxy server for hiding API keys",
   "main": "index.js",
   "scripts": {
-    "deploy:dev": "sls deploy --stage dev --conceal",
     "deploy:prod": "sls deploy --stage prod --conceal",
-    "run:dev": "sls offline",
+    "dev": "sls offline",
     "invoke:dev": "sls invoke --function api",
     "invoke:prod": "sls invoke local --function api"
   },
