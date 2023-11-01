@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "deploy:prod": "sls deploy --stage prod --conceal",
-    "dev": "sls offline",
+    "dev": "sls offline --httpPort 3001",
     "invoke:dev": "sls invoke --function api",
     "invoke:prod": "sls invoke local --function api"
   },
